@@ -13,7 +13,7 @@ namespace RoomBookingApp.Core.Processors
 
         public RoomBookingRequestProcessor(IRoomBookingService roomBookingService)
         {
-            this._roomBookingService = roomBookingService;
+            _roomBookingService = roomBookingService;
         }
 
         public RoomBookingResult BookRoom(RoomBookingRequest bookingRequest)
@@ -24,6 +24,7 @@ namespace RoomBookingApp.Core.Processors
             }
 
             var availabeRooms = _roomBookingService.GetAvailableRooms(bookingRequest.Date);
+
             var result = CreateRoomBookingObject<RoomBookingResult>(bookingRequest);
 
             if (availabeRooms.Any())
@@ -44,8 +45,7 @@ namespace RoomBookingApp.Core.Processors
             return result;
         }
 
-        private static TRoomBooking CreateRoomBookingObject<TRoomBooking>(RoomBookingRequest bookingRequest) where TRoomBooking 
-            : RoomBookingBase, new()
+        private static TRoomBooking CreateRoomBookingObject<TRoomBooking>(RoomBookingRequest bookingRequest) where TRoomBooking : RoomBookingBase, new()
         {
             return new TRoomBooking
             {

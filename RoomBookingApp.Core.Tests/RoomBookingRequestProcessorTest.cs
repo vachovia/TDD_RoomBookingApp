@@ -24,6 +24,7 @@ namespace RoomBookingApp.Core.Tests
                 Email = "test@request.com",
                 Date = new DateTime(2021, 10, 20)
             };
+
             _availableRooms = new List<Room>() { new Room() { Id = 1 } };
 
             _roomBookingServiceMock = new Mock<IRoomBookingService>();
@@ -52,6 +53,7 @@ namespace RoomBookingApp.Core.Tests
         public void Should_Throw_Exception_For_Null_Request()
         {
             var exception = Should.Throw<ArgumentNullException>(() => _processor.BookRoom(null));
+            // Assert.Throws<ArgumentNullException>(() => _processor.BookRoom(null));
             exception.ParamName.ShouldBe("bookingRequest");
         }
 
@@ -96,7 +98,6 @@ namespace RoomBookingApp.Core.Tests
 
             var result = _processor.BookRoom(_request);
             bookingSuccessFlag.ShouldBe(result.Flag);
-
         }
 
         [Theory]
@@ -113,7 +114,7 @@ namespace RoomBookingApp.Core.Tests
                 _roomBookingServiceMock.Setup(q => q.Save(It.IsAny<RoomBooking>()))
                .Callback<RoomBooking>(booking =>
                {
-                   booking.Id = roomBookingId.Value;
+                   booking.Id = roomBookingId!.Value;
                });
             }
 
