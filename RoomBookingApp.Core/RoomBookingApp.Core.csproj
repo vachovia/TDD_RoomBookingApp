@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\..\Users\Vlad\Desktop\TDD-With-CSharp-RoomBookingApp-152efc4d45ed5273b919a141a855ccdb815062c8\RoomBookingApp.Domain\RoomBookingApp.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
