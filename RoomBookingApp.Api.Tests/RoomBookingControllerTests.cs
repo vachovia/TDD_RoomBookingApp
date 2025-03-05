@@ -39,7 +39,7 @@ namespace RoomBookingApp.Api.Tests
             _result.Flag = bookingResultFlag;            
 
             // Act
-            var result =  _controller.BookRoom(_request);
+            var result = _controller.BookRoom(_request);
 
             // Assert
             result.ShouldBeOfType(expectedActionResultType);
