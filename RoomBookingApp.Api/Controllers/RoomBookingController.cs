@@ -21,6 +21,7 @@ namespace RoomBookingApp.Api.Controllers
             if (ModelState.IsValid)
             {
                 var result = _roomBookingProcessor.BookRoom(request);
+
                 if(result.Flag == Core.Enums.BookingResultFlag.Success)
                 {
                     return Ok(result);
