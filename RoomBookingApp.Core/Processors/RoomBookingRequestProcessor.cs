@@ -1,29 +1,28 @@
-﻿using RoomBookingApp.Core.DataServices;
+﻿using RoomBookingApp.Domain;
 using RoomBookingApp.Core.Enums;
 using RoomBookingApp.Core.Models;
-using RoomBookingApp.Domain;
 using RoomBookingApp.Domain.BaseModels;
+using RoomBookingApp.Core.DataServices;
 
 namespace RoomBookingApp.Core.Processors
 {
-    public class RoomBookingRequestProcessor
+    public class RoomBookingRequestProcessor : IRoomBookingRequestProcessor
     {
         private readonly IRoomBookingService _roomBookingService;
 
         public RoomBookingRequestProcessor(IRoomBookingService roomBookingService)
         {
-            _roomBookingService = roomBookingService;
+            this._roomBookingService = roomBookingService;
         }
 
         public RoomBookingResult BookRoom(RoomBookingRequest bookingRequest)
         {
-            if(bookingRequest is null)
+            if (bookingRequest is null)
             {
                 throw new ArgumentNullException(nameof(bookingRequest));
             }
 
             var availabeRooms = _roomBookingService.GetAvailableRooms(bookingRequest.Date);
-
             var result = CreateRoomBookingObject<RoomBookingResult>(bookingRequest);
 
             if (availabeRooms.Any())
@@ -31,7 +30,7 @@ namespace RoomBookingApp.Core.Processors
                 var room = availabeRooms.First();
                 var roomBooking = CreateRoomBookingObject<RoomBooking>(bookingRequest);
                 roomBooking.RoomId = room.Id;
-                _roomBookingService.Save(roomBooking);
+                _roomBookingService.SaveBooking(roomBooking);
 
                 result.RoomBookingId = roomBooking.Id;
                 result.Flag = BookingResultFlag.Success;
@@ -44,7 +43,7 @@ namespace RoomBookingApp.Core.Processors
             return result;
         }
 
-        private static TRoomBooking CreateRoomBookingObject<TRoomBooking>(RoomBookingRequest bookingRequest) where TRoomBooking : RoomBookingBase, new()
+        private static TRoomBooking CreateRoomBookingObject<TRoomBooking>(RoomBookingRequest bookingRequest) where TRoomBooking: RoomBookingBase, new()
         {
             return new TRoomBooking
             {

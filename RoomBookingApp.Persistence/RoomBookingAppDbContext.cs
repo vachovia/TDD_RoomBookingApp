@@ -1,14 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
-using RoomBookingApp.Domain;
+﻿using RoomBookingApp.Domain;
+using Microsoft.EntityFrameworkCore;
 
 namespace RoomBookingApp.Persistence
 {
     public class RoomBookingAppDbContext : DbContext
     {
-        public RoomBookingAppDbContext(DbContextOptions<RoomBookingAppDbContext> options) : base(options)
-        {
-
-        }
+        public RoomBookingAppDbContext(DbContextOptions<RoomBookingAppDbContext> options) : base(options) { }
 
         public DbSet<Room> Rooms { get; set; }
         public DbSet<RoomBooking> RoomBookings { get; set; }

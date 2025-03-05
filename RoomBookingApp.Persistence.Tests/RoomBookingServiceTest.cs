@@ -1,9 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
-using RoomBookingApp.Domain;
-using RoomBookingApp.Persistence.Repositories;
+﻿using Xunit;
 using System;
 using System.Linq;
-using Xunit;
+using RoomBookingApp.Domain;
+using Microsoft.EntityFrameworkCore;
+using RoomBookingApp.Persistence.Repositories;
 
 namespace RoomBookingApp.Persistence.Tests
 {
@@ -20,7 +20,6 @@ namespace RoomBookingApp.Persistence.Tests
                 .Options;
 
             using var context = new RoomBookingAppDbContext(dbOptions);
-
             context.Add(new Room { Id = 1, Name = "Room 1" });
             context.Add(new Room { Id = 2, Name = "Room 2" });
             context.Add(new Room { Id = 3, Name = "Room 3" });
@@ -51,10 +50,9 @@ namespace RoomBookingApp.Persistence.Tests
 
             var roomBooking = new RoomBooking { RoomId = 1, Date = new DateTime(2021, 06, 09) };
 
-
             using var context = new RoomBookingAppDbContext(dbOptions);
             var roomBookingService = new RoomBookingService(context);
-            roomBookingService.Save(roomBooking);
+            roomBookingService.SaveBooking(roomBooking);
 
             var bookings = context.RoomBookings.ToList();
             var booking = Assert.Single(bookings);
