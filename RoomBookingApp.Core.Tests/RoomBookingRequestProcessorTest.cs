@@ -110,7 +110,7 @@ namespace RoomBookingApp.Core
                 _roomBookingServiceMock.Setup(q => q.SaveBooking(It.IsAny<RoomBooking>()))
                .Callback<RoomBooking>(booking =>
                {
-                   booking.Id = roomBookingId.Value;
+                   booking.Id = roomBookingId ?? default;
                });
             }
 
